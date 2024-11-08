@@ -8,21 +8,21 @@ import { Button } from "@/components/ui/button"
 
 export function ThemeToggleButton() {
     const { theme, setTheme } = useTheme()
-    const [hydrated, setHydrated] = React.useState(false)
+    const [mounted, setMounted] = React.useState(false)
 
     React.useEffect(() => {
-        setHydrated(true)
+        setMounted(true)
     }, [])
 
+    if (!mounted || !theme) {
+        return null
+    }
 
     return (
-        hydrated && <>
-            <div>
-                <Button variant="outline" className="p-2" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-                    {theme === "light" && <Moon className=" w-5 h-5 " />}
-                    {theme === "dark" && <Sun className=" w-5 h-5 " />}
-                </Button>
-            </div>
-        </>
+        <div>
+            <Button variant="outline" className="p-2" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+                {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+            </Button>
+        </div>
     )
 }
